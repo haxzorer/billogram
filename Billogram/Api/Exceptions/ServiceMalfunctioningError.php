@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2013 Billogram AB
+ * Copyright (c) 2013 Billogram AB.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,6 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * @package Billogram_Api
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @author Billogram AB
  */
@@ -30,10 +29,8 @@ namespace Billogram\Api\Exceptions;
 use Billogram\Api\Error;
 
 /**
- * The Billogram API service seems to be malfunctioning
- *
+ * The Billogram API service seems to be malfunctioning.
  */
 class ServiceMalfunctioningError extends Error
 {
-
 }

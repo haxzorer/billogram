@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2013 Billogram AB
+ * Copyright (c) 2013 Billogram AB.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,6 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * @package Billogram_Api
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @author Billogram AB
  */
@@ -30,7 +29,7 @@ namespace Billogram\Api\Objects;
 use Billogram\Api\Exceptions\UnknownFieldError;
 
 /**
- * Represents a remote singleton object on Billogram
+ * Represents a remote singleton object on Billogram.
  *
  * Implements __get for object-like access to the data of the remote object,
  * or use the 'data' property to access the backing array. The data in this
@@ -54,7 +53,7 @@ class SingletonObject
     protected $api;
 
     /**
-     * Constructor sets a url endpoint for the resource
+     * Constructor sets a url endpoint for the resource.
      *
      * @param $api
      * @param $urlName
@@ -66,13 +65,13 @@ class SingletonObject
     }
 
     /**
-     * String representation of the object
+     * String representation of the object.
      *
      * @return string
      */
     public function __toString()
     {
-        return "<Billogram object '" . $this->url() . "'" . ($this->data === null ? " (lazy)" : "") . ">";
+        return "<Billogram object '".$this->url()."'".($this->data === null ? ' (lazy)' : '').'>';
     }
 
     /**
@@ -82,11 +81,12 @@ class SingletonObject
      */
     public function url()
     {
-        if ($this->urlName)
+        if ($this->urlName) {
             return $this->urlName;
-        if ($this->objectClass)
+        }
+        if ($this->objectClass) {
             return $this->objectClass->url($this);
-        return null;
+        }
     }
 
     /**
@@ -106,6 +106,7 @@ class SingletonObject
      * Updates the API object with $data.
      *
      * @param $data
+     *
      * @return $this
      */
     public function update($data)
@@ -117,27 +118,32 @@ class SingletonObject
     }
 
     /**
-     * Wrapper method to easier access the specific parameters
+     * Wrapper method to easier access the specific parameters.
      *
      * @param $key
-     * @return null
+     *
      * @throws \Billogram\Api\Exceptions\UnknownFieldError
+     *
+     * @return null
      */
     public function __get($key)
     {
         switch ($key) {
             case 'data':
-                if (!$this->data)
+                if (!$this->data) {
                     $this->refresh();
+                }
 
                 return $this->data;
 
             default:
-                if (!$this->data)
+                if (!$this->data) {
                     $this->refresh();
-                if (array_key_exists($key, $this->data))
+                }
+                if (array_key_exists($key, $this->data)) {
                     return $this->data[$key];
-                throw new UnknownFieldError("Invalid parameter: " . $key);
+                }
+                throw new UnknownFieldError('Invalid parameter: '.$key);
         }
     }
 }

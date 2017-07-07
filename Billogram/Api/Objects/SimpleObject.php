@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2013 Billogram AB
+ * Copyright (c) 2013 Billogram AB.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,17 +20,14 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * @package Billogram_Api
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @author Billogram AB
  **/
 
 namespace Billogram\Api\Objects;
 
-use Billogram\Api\Objects\SingletonObject;
-
 /**
- * Represents a remote object on the Billogram service
+ * Represents a remote object on the Billogram service.
  *
  * Implements __get for object-like access to the data of the remote object,
  * or use the 'data' property to access the backing array. The data in this
@@ -43,7 +40,6 @@ use Billogram\Api\Objects\SingletonObject;
  * The 'delete' method can be used to remove the backing object.
  *
  * See the online documentation for the actual structure of remote objects.
- *
  */
 class SimpleObject extends SingletonObject
 {
@@ -70,7 +66,5 @@ class SimpleObject extends SingletonObject
     public function delete()
     {
         $this->api->delete($this->url());
-
-        return null;
     }
 }

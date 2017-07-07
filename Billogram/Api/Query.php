@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2013 Billogram AB
+ * Copyright (c) 2013 Billogram AB.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,6 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * @package Billogram_Api
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @author Billogram AB
  */
@@ -28,7 +27,7 @@
 namespace Billogram\Api;
 
 /**
- * Builds queries and fetches pages of remote objects
+ * Builds queries and fetches pages of remote objects.
  *
  * Due to internal limitations in Billogram it is currently only possible to
  * filter on a single field or special query at a time. This may change in the
@@ -45,10 +44,10 @@ namespace Billogram\Api;
 class Query
 {
     private $typeClass;
-    private $filter = array();
+    private $filter = [];
     private $countCached = null;
     private $pageSize = 100;
-    private $order = array();
+    private $order = [];
     private $api;
 
     /**
@@ -69,14 +68,15 @@ class Query
      * page number, filtering and order values. Returns the API response.
      *
      * @param int $pageNumber
+     *
      * @return mixed
      */
     private function makeQuery($pageNumber = 1)
     {
-        $params = array(
+        $params = [
             'page_size' => $this->pageSize,
-            'page' => $pageNumber
-        );
+            'page'      => $pageNumber,
+        ];
         $params = array_merge($params, $this->filter);
         $params = array_merge($params, $this->order);
         $response = $this->api->get($this->typeClass->url(), $params);
@@ -90,14 +90,15 @@ class Query
      *
      * @param $orderField
      * @param $orderDirection
+     *
      * @return $this
      */
     public function order($orderField, $orderDirection)
     {
-        $this->order = array(
-            'order_field' => $orderField,
-            'order_direction' => $orderDirection
-        );
+        $this->order = [
+            'order_field'     => $orderField,
+            'order_direction' => $orderDirection,
+        ];
 
         return $this;
     }
@@ -106,6 +107,7 @@ class Query
      * Sets the page size.
      *
      * @param $pageSize
+     *
      * @return $this
      */
     public function pageSize($pageSize)
@@ -150,6 +152,7 @@ class Query
      * @param null $filterType
      * @param null $filterField
      * @param null $filterValue
+     *
      * @return $this
      */
     public function makeFilter(
@@ -159,14 +162,15 @@ class Query
     ) {
         if ($filterType === null &&
             $filterField === null &&
-            $filterValue === null)
-            $this->filter = array();
-        else
-            $this->filter = array(
-                'filter_type' => $filterType,
+            $filterValue === null) {
+            $this->filter = [];
+        } else {
+            $this->filter = [
+                'filter_type'  => $filterType,
                 'filter_field' => $filterField,
-                'filter_value' => $filterValue
-            );
+                'filter_value' => $filterValue,
+            ];
+        }
 
         return $this;
     }
@@ -178,7 +182,7 @@ class Query
      */
     public function removeFilter()
     {
-        $this->filter = array();
+        $this->filter = [];
 
         return $this;
     }
@@ -188,6 +192,7 @@ class Query
      *
      * @param $filterField
      * @param $filterValue
+     *
      * @return $this
      */
     public function filterField($filterField, $filterValue)
@@ -200,6 +205,7 @@ class Query
      *
      * @param $filterField
      * @param $filterValue
+     *
      * @return $this
      */
     public function filterPrefix($filterField, $filterValue)
@@ -212,6 +218,7 @@ class Query
      *
      * @param $filterField
      * @param $filterValue
+     *
      * @return $this
      */
     public function filterSearch($filterField, $filterValue)
@@ -224,6 +231,7 @@ class Query
      *
      * @param $filterField
      * @param $filterValue
+     *
      * @return $this
      */
     public function filterSpecial($filterField, $filterValue)
@@ -235,6 +243,7 @@ class Query
      * Filter by a full data search (exact meaning depends on object type).
      *
      * @param $searchTerms
+     *
      * @return $this
      */
     public function search($searchTerms)
@@ -246,15 +255,17 @@ class Query
      * Fetch objects for the one-based page number.
      *
      * @param $pageNumber
+     *
      * @return array
      */
     public function getPage($pageNumber)
     {
         $response = $this->makeQuery($pageNumber);
         $className = $this->typeClass->objectClass;
-        $objects = array();
-        if (!isset($response->data) || !$response->data)
-            return array();
+        $objects = [];
+        if (!isset($response->data) || !$response->data) {
+            return [];
+        }
         foreach ($response->data as $object) {
             $objects[] = new $className($this->api, $this->typeClass, $object);
         }
