@@ -40,9 +40,9 @@ class Items implements CreatableFromArray
     }
 
     /**
-     * @return Item
+     * @return Items[]
      */
-    public function getCustomer(): Item
+    public function getItems()
     {
         return $this->items;
     }
