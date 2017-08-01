@@ -6,7 +6,7 @@ namespace Billogram\Api;
 
 use Billogram\Exception\Domain\ValidationException;
 use Billogram\Model\Item\Item as Model;
-use Billogram\Model\Item\Items;
+use Billogram\Model\Item\CollectionItem;
 
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
@@ -32,7 +32,7 @@ class Item extends HttpApi
             $this->handleErrors($response);
         }
 
-        return $this->hydrator->hydrate($response, Items::class);
+        return $this->hydrator->hydrate($response, CollectionItem::class);
     }
 
     /**
@@ -105,8 +105,7 @@ class Item extends HttpApi
     }
 
     /**
-     * @param int   $itemNo
-     * @param Model $item
+     * @param int $itemNo
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      *
@@ -114,9 +113,9 @@ class Item extends HttpApi
      *
      * @see https://billogram.com/api/documentation#items_delete
      */
-    public function delete(int $itemNo, Model $item)
+    public function delete(int $itemNo)
     {
-        $response = $this->httpDelete('/item/'.$itemNo, $item->toArray());
+        $response = $this->httpDelete('/item/'.$itemNo);
         if (!$this->hydrator) {
             return $response;
         }

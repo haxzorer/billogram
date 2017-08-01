@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Billogram\Model\Invoice;
 
 use Billogram\Model\CreatableFromArray;
+use Billogram\Model\Item\BaseItem;
 use Billogram\Model\Item\Bookkeeping;
-use Billogram\Model\Item\Item as Model;
 
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
  */
-class Item extends Model implements CreatableFromArray
+class Item extends BaseItem implements CreatableFromArray
 {
     /**
      * @var int count
@@ -88,14 +88,14 @@ class Item extends Model implements CreatableFromArray
         $item->count = $data['count'];
         $item->discount = $data['discount'];
         //$item = $item->withItemNo($data['item_no']) ?? null;
-        $item = $item->withTitle($data['title']) ?? null;
-        $item = $item->withDescription($data['description']) ?? null;
-        $item = $item->withPrice($data['price']) ?? null;
-        $item = $item->withVat($data['vat']) ?? null;
-        $item = $item->withUnit($data['unit']) ?? null;
+        $item->itemNo = $data['item_no'] ?? null;
+        $item->title = $data['title'] ?? null;
+        $item->description = $data['description'] ?? null;
+        $item->price = $data['price'] ?? null;
+        $item->vat = $data['vat'] ?? null;
+        $item->unit = $data['unit'] ?? null;
         $item = $item->withBookkeeping(Bookkeeping::createFromArray($data['bookkeeping'])) ?? null;
 
-        //$item = parent::createFromArray($data);
         return $item;
     }
 }

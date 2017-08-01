@@ -10,7 +10,7 @@ use Billogram\Model\CreatableFromArray;
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
  */
-class Items implements CreatableFromArray
+class CollectionItem implements CreatableFromArray
 {
     /**
      * @var Item[]

@@ -7,7 +7,7 @@ namespace Billogram\Api;
 use Billogram\Exception\Domain\NotFoundException;
 use Billogram\Exception\Domain\ValidationException;
 use Billogram\Model\Customer\Customer as Model;
-use Billogram\Model\Customer\Customers;
+use Billogram\Model\Customer\CustomerCollection;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -33,7 +33,7 @@ class Customer extends HttpApi
             $this->handleErrors($response);
         }
 
-        return $this->hydrator->hydrate($response, Customers::class);
+        return $this->hydrator->hydrate($response, CustomerCollection::class);
     }
 
     /**

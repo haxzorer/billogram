@@ -11,7 +11,7 @@ use Billogram\Model\Customer\Customer;
 use Billogram\Model\Customer\CustomerContact;
 use Billogram\Model\Customer\CustomerBillingAddress;
 use Billogram\Model\Customer\CustomerDeliveryAddress;
-use Billogram\Model\Customer\Customers;
+use Billogram\Model\Customer\CustomerCollection;
 use Billogram\Tests\BaseTestCase;
 
 /**
@@ -91,6 +91,6 @@ class CostumerTest extends BaseTestCase
         $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
         $apiClient = BillogramClient::configure($httpClientConfigurator);
         $customers = $apiClient->customers()->search(['page' => '1']);
-        $this->assertInstanceOf(Customers::class, $customers);
+        $this->assertInstanceOf(CustomerCollection::class, $customers);
     }
 }

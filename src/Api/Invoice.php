@@ -6,7 +6,7 @@ namespace Billogram\Api;
 
 use Billogram\Exception\Domain\ValidationException;
 use Billogram\Model\Invoice\Invoice as Model;
-use Billogram\Model\Invoice\Invoices;
+use Billogram\Model\Invoice\InvoiceCollection;
 
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
@@ -33,7 +33,7 @@ class Invoice extends HttpApi
             $this->handleErrors($response);
         }
 
-        return $this->hydrator->hydrate($response, Invoices::class);
+        return $this->hydrator->hydrate($response, InvoiceCollection::class);
     }
 
     /**

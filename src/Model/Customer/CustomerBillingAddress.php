@@ -72,18 +72,18 @@ class CustomerBillingAddress implements CreatableFromArray
         return $this->useCareOfAsAttention;
     }
 
-     /**
-      * @param bool $useCareOfAsAttention
-      *
-      * @return CustomerBillingAddress
-      */
-     public function withUseCareOfAsAttention(bool $useCareOfAsAttention)
-     {
-         $new = clone $this;
-         $new->useCareOfAsAttention = $useCareOfAsAttention;
+    /**
+     * @param bool $useCareOfAsAttention
+     *
+     * @return CustomerBillingAddress
+     */
+    public function withUseCareOfAsAttention(bool $useCareOfAsAttention)
+    {
+        $new = clone $this;
+        $new->useCareOfAsAttention = $useCareOfAsAttention;
 
-         return $new;
-     }
+        return $new;
+    }
 
     /**
      * @return string

@@ -9,7 +9,7 @@ use Billogram\Model\CreatableFromArray;
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
  */
-class Customers implements CreatableFromArray
+class CustomerCollection implements CreatableFromArray
 {
     /**
      * @var Customer[]

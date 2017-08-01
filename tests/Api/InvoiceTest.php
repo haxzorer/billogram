@@ -86,6 +86,6 @@ class InvoiceTest extends BaseTestCase
         $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
         $apiClient = BillogramClient::configure($httpClientConfigurator);
         $invoices = $apiClient->invoices()->search(['page' => 1]);
-        $this->assertInstanceOf(\Billogram\Model\Invoice\Invoices::class, $invoices);
+        $this->assertInstanceOf(\Billogram\Model\Invoice\InvoiceCollection::class, $invoices);
     }
 }

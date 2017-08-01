@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types=1);
+ declare(strict_types=1);
 
 namespace Billogram\Tests;
 
 use Http\Client\HttpClient;
-use Nyholm\Psr7\Factory\StreamFactory;
-use Nyholm\Psr7\Response;
+use Http\Message\StreamFactory\GuzzleStreamFactory;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -55,7 +55,7 @@ class CachedResponseClient implements HttpClient
         if (is_file($file) && is_readable($file)) {
             $header = json_decode(file_get_contents($file.'headers.txt'), true);
 
-            return new Response(200, $header, (new StreamFactory())->createStream(unserialize(file_get_contents($file))));
+            return new Response(200, $header, (new GuzzleStreamFactory())->createStream(unserialize(file_get_contents($file))));
         }
         $response = $this->delegate->sendRequest($request);
         file_put_contents($file, serialize($response->getBody()->getContents()));

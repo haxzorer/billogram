@@ -9,7 +9,7 @@ use Billogram\Model\CreatableFromArray;
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
  */
-class Invoices implements CreatableFromArray
+class InvoiceCollection implements CreatableFromArray
 {
     /**
      * @var Invoice[]
