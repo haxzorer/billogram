@@ -2,10 +2,12 @@
 
 namespace Billogram\Model\Customer;
 
+use Billogram\Model\CreatableFromArray;
+
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
  */
-class CustomerDeliveryAddress
+class CustomerDeliveryAddress implements CreatableFromArray
 {
     /**
      * @var string
@@ -190,5 +192,25 @@ class CustomerDeliveryAddress
         }
 
         return $data;
+    }
+
+    /**
+     * Create an API response object from the HTTP response from the API server.
+     *
+     * @param array $data
+     *
+     * @return self
+     */
+    public static function createFromArray(array $data)
+    {
+        $customerDeliveryAddress = new self();
+        $customerDeliveryAddress->name = $data['name'];
+        $customerDeliveryAddress->streetAddress = $data['street_address'];
+        $customerDeliveryAddress->careOf = $data['careof'];
+        $customerDeliveryAddress->zipCode = $data['zipcode'];
+        $customerDeliveryAddress->city = $data['city'];
+        $customerDeliveryAddress->country = $data['country'];
+
+        return $customerDeliveryAddress;
     }
 }

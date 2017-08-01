@@ -4,51 +4,49 @@ declare(strict_types=1);
 
 namespace Billogram\Api;
 
-use Billogram\Exception\Domain\NotFoundException;
 use Billogram\Exception\Domain\ValidationException;
-use Billogram\Model\Customer\Customer as Model;
-use Billogram\Model\Customer\Customers;
-use Psr\Http\Message\ResponseInterface;
+use Billogram\Model\Invoice\Invoice as Model;
+use Billogram\Model\Invoice\Invoices;
 
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
  */
-class Customer extends HttpApi
+class Invoice extends HttpApi
 {
     /**
      * @param array $param
      *
      * @return string|array
      *
-     * @see https://billogram.com/api/documentation#customers_list
+     * @see https://billogram.com/api/documentation#billogram_call_create
      */
     public function search(array $param = [])
     {
         $param = array_merge(['page' => 1, 'page_size' => 100], $param);
-        $response = $this->httpGet('/customer', $param);
+        $response = $this->httpget('/billogram', $param);
         if (!$this->hydrator) {
             return $response;
         }
+
+        // Use any valid status code here
         if ($response->getStatusCode() !== 200) {
             $this->handleErrors($response);
         }
 
-        return $this->hydrator->hydrate($response, Customers::class);
+        return $this->hydrator->hydrate($response, Invoices::class);
     }
 
     /**
-     * @param int   $customerNo
-     * @param array $param
+     * @param string $invoiceId
+     * @param array  $param
      *
-     * @return Model|ResponseInterface
+     * @return mixed|\Psr\Http\Message\ResponseInterface
      *
-     * @throws NotFoundException
-     *
-     * @see https://billogram.com/api/documentation#customers_fetch
+     * @see https://billogram.com/api/documentation#billogram_call_create
      */
-    public function fetch(int $customerNo, array $param = [])
+    public function fetch(string $invoiceId, array $param = [])
     {
-        $response = $this->httpGet('/customer/'.$customerNo, $param);
+        $response = $this->httpGet('/billogram/'.$invoiceId, $param);
         if (!$this->hydrator) {
             return $response;
         }
@@ -61,17 +59,17 @@ class Customer extends HttpApi
     }
 
     /**
-     * @param Model $customer
+     * @param Model $invoice
      *
-     * @return Model|ResponseInterface
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     *
+     * @see https://billogram.com/api/documentation#billogram_call_create
      *
      * @throws ValidationException
-     *
-     * @see https://billogram.com/api/documentation#customers_create
      */
-    public function create(Model $customer)
+    public function create(Model $invoice)
     {
-        $response = $this->httpPost('/customer', $customer->toArray());
+        $response = $this->httpPost('/billogram', $invoice->toArray());
         if (!$this->hydrator) {
             return $response;
         }
@@ -84,19 +82,18 @@ class Customer extends HttpApi
     }
 
     /**
-     * @param int   $customerNo
-     * @param Model $costumer
+     * @param string $invoiceId
+     * @param Model  $invoice
      *
-     * @return Model|ResponseInterface
+     * @return mixed|\Psr\Http\Message\ResponseInterface
      *
-     * @throws NotFoundException
+     * @see https://billogram.com/api/documentation#billogram_call_create
+     *
      * @throws ValidationException
-     *
-     * @see https://billogram.com/api/documentation#customers_edit
      */
-    public function update(int $customerNo, Model $costumer)
+    public function update(string $invoiceId, Model $invoice)
     {
-        $response = $this->httpPut('/customer/'.$customerNo, $costumer->toArray());
+        $response = $this->httpPut('/billogram/'.$invoiceId, $invoice->toArray());
         if (!$this->hydrator) {
             return $response;
         }

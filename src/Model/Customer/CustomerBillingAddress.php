@@ -2,10 +2,12 @@
 
 namespace Billogram\Model\Customer;
 
+use Billogram\Model\CreatableFromArray;
+
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
  */
-class CustomerBillingAddress
+class CustomerBillingAddress implements CreatableFromArray
 {
     /**
      * @var string
@@ -51,6 +53,8 @@ class CustomerBillingAddress
 
     /**
      * @param string $careOf
+     *
+     * @return CustomerBillingAddress
      */
     public function withCareOf(string $careOf)
     {
@@ -188,5 +192,25 @@ class CustomerBillingAddress
         }
 
         return $data;
+    }
+
+    /**
+     * Create an API response object from the HTTP response from the API server.
+     *
+     * @param array $data
+     *
+     * @return self
+     */
+    public static function createFromArray(array $data)
+    {
+        $customerBillingAddress = new self();
+        $customerBillingAddress->careOf = $data['careof'];
+        $customerBillingAddress->useCareOfAsAttention = $data['use_careof_as_attention'];
+        $customerBillingAddress->streetAddress = $data['street_address'];
+        $customerBillingAddress->zipCode = $data['zipcode'];
+        $customerBillingAddress->city = $data['city'];
+        $customerBillingAddress->country = $data['country'];
+
+        return $customerBillingAddress;
     }
 }

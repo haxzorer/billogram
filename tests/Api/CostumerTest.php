@@ -2,23 +2,38 @@
 
 declare(strict_types=1);
 
-namespace tests\Api;
+namespace Billogram\Tests\Api;
 
 use Billogram\ApiClient;
+use Billogram\HttpClientConfigurator;
 use Billogram\Model\Customer\Customer as Model;
+use Billogram\Model\Customer\Customer;
 use Billogram\Model\Customer\CustomerContact;
 use Billogram\Model\Customer\CustomerBillingAddress;
 use Billogram\Model\Customer\CustomerDeliveryAddress;
-use PHPUnit\Framework\TestCase;
+use Billogram\Model\Customer\Customers;
+use Billogram\Tests\BaseTestCase;
 
-class CostumerTest extends TestCase
+/**
+ * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
+ */
+class CostumerTest extends BaseTestCase
 {
-    /*public function testPost(){
-        $contact = new CustomerContact('ib92g','ib922@gmail.com','0712223344');
-        $addressCustomer = new CustomerBillingAddress('ibrahim',false,'Flygarvägen 189B','175 69','Järfälla','SE');
-        $addressDelivery = new CustomerDeliveryAddress('ibrahim','Flygarvägen 189B','ibrahim','175 69','Järfälla','SE');
+    /**
+     * @return string|null the directory where cached responses are stored
+     */
+    protected function getCacheDir()
+    {
+        return dirname(__DIR__).'/.cache';
+    }
+
+    public function testCreate()
+    {
+        $contact = CustomerContact::createFromArray(['name' => 'ib92g', 'email' => 'ib922@gmail.com', 'phone' => '0712223344']);
+        $addressCustomer = CustomerBillingAddress::createFromArray(['careof' => 'ibrahim', 'use_careof_as_attention' => false, 'street_address' => 'Flygarvägen 189B', 'zipcode' => '175 69', 'city' => 'Järfälla', 'country' => 'SE']);
+        $addressDelivery = CustomerDeliveryAddress::createFromArray(['name' => 'ibrahim', 'street_address' => 'Flygarvägen 189B', 'careof' => 'ibrahim', 'zipcode' => '175 69', 'city' => 'Järfälla', 'country' => 'SE']);
         $customer = new Model();
-        $customer = $customer->withCustomerNo(1);
+        $customer = $customer->withCustomerNo(25);
         $customer = $customer->withName('Ibrahim AA');
         $customer = $customer->withNotes('aa');
         $customer = $customer->withOrgNo('556801-7155');
@@ -27,17 +42,20 @@ class CostumerTest extends TestCase
         $customer = $customer->withAddress($addressCustomer);
         $customer = $customer->withDeliveryAddress($addressDelivery);
         $customer = $customer->withCompanyType('individual');
-        $apiClient = ApiClient::create('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $apiClient->customers()->create($customer);
-    }*/
+        $cacheClient = $this->getHttpClient();
+        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
+        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
+        $apiClient = ApiClient::configure($httpClientConfigurator);
+        $customerFinal = $apiClient->customers()->create($customer);
+        $this->assertInstanceOf(Customer::class, $customerFinal);
+    }
 
-   /* public function testUpdate()
+    public function testUpdate()
     {
-        $contact = new CustomerContact('ib92g', 'ib922@gmail.com', '0712223344');
-        $addressCustomer = new CustomerBillingAddress('ibrahim', false, 'Flygarvägen 189B', '175 69', 'Järfälla', 'SE');
-        $addressDelivery = new CustomerDeliveryAddress('ibrahim', 'Flygarvägen 189B', 'ibrahim', '175 69', 'Järfälla', 'SE');
-        $customer = new Model();
-        $customer = $customer->withCustomerNo(1);
+        $contact = CustomerContact::createFromArray(['name' => 'ib92g', 'email' => 'zlatan@gmail.com', 'phone' => '0712223344']);
+        $addressCustomer = CustomerBillingAddress::createFromArray(['careof' => 'ibrahim', 'use_careof_as_attention' => false, 'street_address' => 'Flygarvägen 189B', 'zipcode' => '175 69', 'city' => 'Järfälla', 'country' => 'SE']);
+        $addressDelivery = CustomerDeliveryAddress::createFromArray(['name' => 'ibrahim', 'street_address' => 'Flygarvägen 189B', 'careof' => 'ibrahim', 'zipcode' => '175 69', 'city' => 'Järfälla', 'country' => 'SE']);
+        $customer = $this->testFetch(22);
         $customer = $customer->withName('Ibrahim bb');
         $customer = $customer->withNotes('aa');
         $customer = $customer->withOrgNo('556801-7155');
@@ -46,17 +64,33 @@ class CostumerTest extends TestCase
         $customer = $customer->withAddress($addressCustomer);
         $customer = $customer->withDeliveryAddress($addressDelivery);
         $customer = $customer->withCompanyType('individual');
-        $apiClient = ApiClient::create('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $apiClient->customers()->update(1, $customer);
-    }*/
+        $cacheClient = $this->getHttpClient();
+        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
+        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
+        $apiClient = ApiClient::configure($httpClientConfigurator);
+        $customerUpdated = $apiClient->customers()->update(22, $customer);
+        $this->assertInstanceOf(Customer::class, $customerUpdated);
+    }
 
-    /*public function testFetch(){
-        $apiClient = ApiClient::create('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $custumer=$apiClient->customers()->fetch(1,['customer_no']);}*/
+    public function testFetch(int $customerNo = 1)
+    {
+        $cacheClient = $this->getHttpClient();
+        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
+        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
+        $apiClient = ApiClient::configure($httpClientConfigurator);
+        $customerFetched = $apiClient->customers()->fetch($customerNo, ['customer_no']);
+        $this->assertInstanceOf(Customer::class, $customerFetched);
+
+        return $customerFetched;
+    }
 
     public function testSearch()
     {
-        $apiClient = ApiClient::create('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $custumers = $apiClient->customers()->search(['name' => 'foo', 'page' => 2]);
+        $cacheClient = $this->getHttpClient();
+        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
+        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
+        $apiClient = ApiClient::configure($httpClientConfigurator);
+        $customers = $apiClient->customers()->search(['page' => '1']);
+        $this->assertInstanceOf(Customers::class, $customers);
     }
 }

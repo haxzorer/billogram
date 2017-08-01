@@ -155,11 +155,13 @@ abstract class HttpApi
     {
         switch ($response->getStatusCode()) {
             case 404:
-                throw new DomainExceptions\NotFoundException();
+                throw new DomainExceptions\NotFoundException($response->getBody()->__toString());
+                break;
+            case 400:
+                throw new DomainExceptions\ValidationException($response->getBody()->__toString());
                 break;
             default:
-                $body = $response->getBody()->__toString();
-                throw new DomainExceptions\UnknownErrorException();
+                throw new DomainExceptions\UnknownErrorException($response->getBody()->__toString());
                 break;
         }
     }
