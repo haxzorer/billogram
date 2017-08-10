@@ -16,7 +16,7 @@ use Billogram\Tests\BaseTestCase;
  */
 class InvoiceTest extends BaseTestCase
 {
-    /**
+    /*
      * @return string|null the directory where cached responses are stored
      */
     protected function getCacheDir()
