@@ -61,17 +61,18 @@ class ItemTest extends BaseTestCase
         $this->assertInstanceOf(Item::class, $itemUpdated);
     }
 
-    public function testDelete(int $itemNo = 6)
+    public function testDelete(int $itemNo = 9)
     {
         $cacheClient = $this->getHttpClient();
         $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
         $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
+
         $apiClient = BillogramClient::configure($httpClientConfigurator);
         $customerDeleted = $apiClient->items()->delete($itemNo);
         $this->assertInstanceOf(Item::class, $customerDeleted);
     }
 
-    public function testFetch(int $itemNo = 5)
+    public function testFetch(int $itemNo = 10)
     {
         $cacheClient = $this->getHttpClient();
         $httpClientConfigurator = new HttpClientConfigurator($cacheClient);

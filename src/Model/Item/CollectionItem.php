@@ -40,7 +40,7 @@ class CollectionItem implements CreatableFromArray
     }
 
     /**
-     * @return Items[]
+     * @return CollectionItem[]
      */
     public function getItems()
     {

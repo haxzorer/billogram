@@ -14,12 +14,12 @@ use Billogram\Tests\BaseTestCase;
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
  */
-class InvoiceTest extends BaseTestCase
+class InvoiceTest /*extends BaseTestCase*/
 {
     /*
      * @return string|null the directory where cached responses are stored
      */
-    protected function getCacheDir()
+    /*protected function getCacheDir()
     {
         return dirname(__DIR__).'/.cache';
     }
@@ -87,5 +87,5 @@ class InvoiceTest extends BaseTestCase
         $apiClient = BillogramClient::configure($httpClientConfigurator);
         $invoices = $apiClient->invoices()->search(['page' => 1]);
         $this->assertInstanceOf(\Billogram\Model\Invoice\InvoiceCollection::class, $invoices);
-    }
+    }*/
 }
