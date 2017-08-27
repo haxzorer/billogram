@@ -12,7 +12,7 @@ use Billogram\Model\CreatableFromArray;
 abstract class BaseItem implements CreatableFromArray
 {
     /**
-     * @var int
+     * @var string
      */
     protected $itemNo;
 
@@ -57,19 +57,19 @@ abstract class BaseItem implements CreatableFromArray
     protected $updatedAt;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getItemNo(): int
+    public function getItemNo()
     {
         return $this->itemNo;
     }
 
     /**
-     * @param int $itemNo
+     * @param string $itemNo
      *
      * @return Item
      */
-    public function withItemNo(int $itemNo)
+    public function withItemNo(string $itemNo)
     {
         $new = clone $this;
         $new->itemNo = $itemNo;

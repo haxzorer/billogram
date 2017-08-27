@@ -46,7 +46,7 @@ class ItemTest extends BaseTestCase
     public function testUpdate()
     {
         $bookkeeping = Bookkeeping::createFromArray(['income_account' => '302', 'vat_account' => '303']);
-        $item = $this->testFetch(3);
+        $item = $this->testFetch('3');
         $item = $item->withTitle('cc');
         $item = $item->withDescription('cc');
         $item = $item->withPrice(12);
@@ -71,7 +71,7 @@ class ItemTest extends BaseTestCase
         $this->assertInstanceOf(Item::class, $customerDeleted);
     }
 
-    public function testFetch(int $itemNo = 10)
+    public function testFetch(string $itemNo = '10')
     {
         $cacheClient = $this->getHttpClient();
         $httpClientConfigurator = new HttpClientConfigurator($cacheClient);

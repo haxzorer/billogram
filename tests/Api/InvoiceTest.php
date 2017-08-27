@@ -30,7 +30,7 @@ class InvoiceTest extends BaseTestCase
         $customer = new Customer();
         $customer = $customer->withCustomerNo(23);
         $item2 = new Item();
-        $item2 = $item2->withItemNo(25);
+        $item2 = $item2->withItemNo('25');
         $item2 = $item2->withCount(5);
         $item2 = $item2->withDiscount(0);
         $invoice = new Invoice();
@@ -50,11 +50,11 @@ class InvoiceTest extends BaseTestCase
         $customer = new Customer();
         $customer = $customer->withCustomerNo(25);
         $item1 = new Item();
-        $item1 = $item1->withItemNo(3);
+        $item1 = $item1->withItemNo('3');
         $item1 = $item1->withCount(5);
         $item1 = $item1->withDiscount(0);
         $item2 = new Item();
-        $item2 = $item2->withItemNo(2);
+        $item2 = $item2->withItemNo('2');
         $item2 = $item2->withCount(2);
         $item2 = $item2->withDiscount(1);
         $apiClient = BillogramClient::create('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');

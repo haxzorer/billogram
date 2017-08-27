@@ -36,14 +36,14 @@ class Item extends HttpApi
     }
 
     /**
-     * @param int   $itemNo
-     * @param array $param
+     * @param string $itemNo
+     * @param array  $param
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      *
      * @see https://billogram.com/api/documentation#items_fetch
      */
-    public function fetch(int $itemNo, array $param = [])
+    public function fetch(string $itemNo, array $param = [])
     {
         $response = $this->httpGet('/item/'.$itemNo, $param);
         if (!$this->hydrator) {
