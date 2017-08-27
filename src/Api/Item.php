@@ -7,6 +7,7 @@ namespace Billogram\Api;
 use Billogram\Exception\Domain\ValidationException;
 use Billogram\Model\Item\Item as Model;
 use Billogram\Model\Item\CollectionItem;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @author Ibrahim Hizeoui <ibrahimhizeoui@gmail.com>
@@ -16,7 +17,7 @@ class Item extends HttpApi
     /**
      * @param array $param
      *
-     * @return string|array
+     * @return CollectionItem|ResponseInterface
      *
      * @see https://billogram.com/api/documentation#items_list
      */
@@ -37,15 +38,14 @@ class Item extends HttpApi
 
     /**
      * @param string $itemNo
-     * @param array  $param
      *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return Model|ResponseInterface
      *
      * @see https://billogram.com/api/documentation#items_fetch
      */
-    public function fetch(string $itemNo, array $param = [])
+    public function fetch(string $itemNo)
     {
-        $response = $this->httpGet('/item/'.$itemNo, $param);
+        $response = $this->httpGet('/item/'.$itemNo);
         if (!$this->hydrator) {
             return $response;
         }
@@ -60,15 +60,15 @@ class Item extends HttpApi
     /**
      * @param Model $item
      *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return Model|ResponseInterface
      *
      * @throws ValidationException
      *
      * @see https://billogram.com/api/documentation#items_create
      */
-    public function create(Model $item)
+    public function create(array $item)
     {
-        $response = $this->httpPost('/item', $item->toArray());
+        $response = $this->httpPost('/item', $item);
         if (!$this->hydrator) {
             return $response;
         }
@@ -81,18 +81,18 @@ class Item extends HttpApi
     }
 
     /**
-     * @param int   $itemNo
-     * @param Model $item
+     * @param string $itemNo
+     * @param array  $item
      *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return Model|ResponseInterface
      *
      * @throws ValidationException
      *
      * @see https://billogram.com/api/documentation#items_edit
      */
-    public function update(int $itemNo, Model $item)
+    public function update(string $itemNo, array $item)
     {
-        $response = $this->httpPut('/item/'.$itemNo, $item->toArray());
+        $response = $this->httpPut('/item/'.$itemNo, $item);
         if (!$this->hydrator) {
             return $response;
         }
@@ -105,15 +105,15 @@ class Item extends HttpApi
     }
 
     /**
-     * @param int $itemNo
+     * @param string $itemNo
      *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return Model|ResponseInterface
      *
      * @throws ValidationException
      *
      * @see https://billogram.com/api/documentation#items_delete
      */
-    public function delete(int $itemNo)
+    public function delete(string $itemNo)
     {
         $response = $this->httpDelete('/item/'.$itemNo);
         if (!$this->hydrator) {
