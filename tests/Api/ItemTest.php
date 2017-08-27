@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Billogram\Tests\Api;
 
-use Billogram\BillogramClient;
-use Billogram\HttpClientConfigurator;
 use Billogram\Model\Item\Bookkeeping;
 use Billogram\Model\Item\Item as Model;
 use Billogram\Model\Item\CollectionItem;
@@ -27,11 +25,9 @@ class ItemTest extends BaseTestCase
         $item = $item->withVat(12);
         $item = $item->withUnit('hour');
         $item = $item->withBookkeeping($bookkeeping);
-        $cacheClient = $this->getHttpClient();
-        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
-        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $apiClient = BillogramClient::configure($httpClientConfigurator);
-        $itemCreated = $apiClient->items()->create($item->toArray());
+
+        $billogram = $this->getBillogram();
+        $itemCreated = $billogram->items()->create($item->toArray());
         $this->assertInstanceOf(Item::class, $itemCreated);
     }
 
@@ -45,43 +41,30 @@ class ItemTest extends BaseTestCase
         $item = $item->withVat(12);
         $item = $item->withUnit('hour');
         $item = $item->withBookkeeping($bookkeeping);
-        $cacheClient = $this->getHttpClient();
-        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
-        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $apiClient = BillogramClient::configure($httpClientConfigurator);
-        $itemUpdated = $apiClient->items()->update('35', $item->toArray());
+
+        $billogram = $this->getBillogram();
+        $itemUpdated = $billogram->items()->update('35', $item->toArray());
         $this->assertInstanceOf(Item::class, $itemUpdated);
     }
 
     public function testDelete()
     {
-        $cacheClient = $this->getHttpClient();
-        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
-        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $apiClient = BillogramClient::configure($httpClientConfigurator);
-        $customerDeleted = $apiClient->items()->delete('9');
+        $billogram = $this->getBillogram();
+        $customerDeleted = $billogram->items()->delete('9');
         $this->assertInstanceOf(Item::class, $customerDeleted);
     }
 
     public function testFetch()
     {
-        $cacheClient = $this->getHttpClient();
-        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
-        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $apiClient = BillogramClient::configure($httpClientConfigurator);
-        $itemFetched = $apiClient->items()->fetch('35');
+        $billogram = $this->getBillogram();
+        $itemFetched = $billogram->items()->fetch('35');
         $this->assertInstanceOf(Item::class, $itemFetched);
-
-        return $itemFetched;
     }
 
     public function testSearch()
     {
-        $cacheClient = $this->getHttpClient();
-        $httpClientConfigurator = new HttpClientConfigurator($cacheClient);
-        $httpClientConfigurator->setAuth('20561-3vhGtAxH', '4eddc2ab063bdd53dc64836ff3a0c7bc');
-        $apiClient = BillogramClient::configure($httpClientConfigurator);
-        $items = $apiClient->items()->search(['page' => 1]);
+        $billogram = $this->getBillogram();
+        $items = $billogram->items()->search(['page' => 1]);
         $this->assertInstanceOf(CollectionItem::class, $items);
     }
 }

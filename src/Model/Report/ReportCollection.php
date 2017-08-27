@@ -14,13 +14,8 @@ class ReportCollection implements CreatableFromArray
     private $reports;
 
     /**
-     * @return Report[]
+     * @param Report[] $reports
      */
-    public function getReport()
-    {
-        return $this->reports;
-    }
-
     private function __construct(array $reports)
     {
         $this->reports = $reports;
@@ -36,5 +31,13 @@ class ReportCollection implements CreatableFromArray
         }
 
         return new self($reports);
+    }
+
+    /**
+     * @return Report[]
+     */
+    public function getReports()
+    {
+        return $this->reports;
     }
 }
