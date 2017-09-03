@@ -33,7 +33,7 @@ class Settings extends HttpApi
      */
     public function update(array $setting)
     {
-        $response = $this->httpPUT('/settings', $setting);
+        $response = $this->httpPut('/settings', $setting);
 
         return $this->handleResponse($response, Setting::class);
     }

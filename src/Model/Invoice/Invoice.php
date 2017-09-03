@@ -884,18 +884,59 @@ class Invoice implements CreatableFromArray
 
     public function toArray()
     {
-        // TODO write me
         $data = [];
         if ($this->customer !== null) {
             $data['customer'] = $this->customer->toArray();
         }
-        if ($this->items !== null) {
+
+        if (!empty($this->automaticCollection)) {
+            $data['automatic_collection'] = $this->automaticCollection->toArray();
+        }
+
+        if (!empty($this->items)) {
             foreach ($this->items as $item) {
                 $data['items'][] = $item->toArray();
             }
         }
-        if ($this->invoiceDate !== null) {
-            $data['invoice_date'] = $this->invoiceDate;
+
+        $map = [
+            'id' => 'id',
+            'invoiceNo' => 'invoice_no',
+            'invoiceDate' => 'invoice_date',
+            'ocrNumber' => 'ocr_number',
+            'dueDate' => 'due_date',
+            'dueDays' => 'due_days',
+            'invoiceFee' => 'invoice_fee',
+            'invoiceFeeVat' => 'invoice_fee_vat',
+            'reminderFee' => 'reminder_fee',
+            'interestRate' => 'interest_rate',
+            'interestFee' => 'interest_fee',
+            'currency' => 'currency',
+            'info' => 'info',
+            'regionalSweden' => 'regional_sweden',
+            'deliveryMethod' => 'delivery_method',
+            'state' => 'state',
+            'url' => 'url',
+            'flags' => 'flags',
+            'events' => 'events',
+            'remainingSum' => 'remaining_sum',
+            'totalSum' => 'total_sum',
+            'roundingValue' => 'rounding_value',
+            'automaticReminders' => 'automatic_reminders',
+            'automaticRemindersSettings' => 'automatic_reminders_settings',
+            'reminderCount' => 'reminder_count',
+            'createdAt' => 'created_at',
+            'updateAt' => 'update_at',
+            'attestedAt' => 'attested_at',
+            'callbacks' => 'callbacks',
+            'detailedSums' => 'detailed_sums',
+            'attachment' => 'attachment',
+        ];
+
+        foreach ($map as $property => $keyName) {
+            if ($this->$property !== null) {
+                $data[$keyName] = $this->$property;
+            }
         }
 
         return $data;
