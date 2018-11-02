@@ -334,6 +334,9 @@ class Customer implements CreatableFromArray
         if (null !== $this->deliveryAddress) {
             $data['delivery_address'] = $this->deliveryAddress->toArray();
         }
+        if (null !== $this->companyType) {
+            $data['company_type'] = $this->companyType;
+        }
 
         return $data;
     }
