@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Billogram\Api;
 
 use Billogram\Model\Invoice\Invoice as Model;
+use Billogram\Model\Invoice\PDF;
 use Billogram\Model\Invoice\InvoiceCollection;
 use Psr\Http\Message\ResponseInterface;
 
@@ -40,6 +41,20 @@ class Invoice extends HttpApi
         $response = $this->httpGet('/billogram/'.$invoiceId);
 
         return $this->handleResponse($response, Model::class);
+    }
+
+    /**
+     * @param string $invoiceId
+     *
+     * @return Model|ResponseInterface
+     *
+     * @see https://billogram.com/api/documentation#billogram_invoice_pdf
+     */
+    public function pdf(string $invoiceId)
+    {
+        $response = $this->httpGet('/billogram/'.$invoiceId.'.pdf');
+
+        return $this->handleResponse($response, PDF::class);
     }
 
     /**
